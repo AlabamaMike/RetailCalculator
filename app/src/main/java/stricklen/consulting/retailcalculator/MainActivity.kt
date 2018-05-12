@@ -20,10 +20,6 @@ class MainActivity : AppCompatActivity() {
                 android.R.layout.simple_spinner_dropdown_item, statesTaxMap.keys.toTypedArray())
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
         stateSelector.adapter = adapter
-
-
-
-
     }
 
     fun runCalculation(view: View) {
@@ -35,22 +31,16 @@ class MainActivity : AppCompatActivity() {
         orderTotalView.text = orderValueFormatted
     }
 
-    fun calculateTax(pretaxValue: Double): Double {
-        return pretaxValue * statesTaxMap[stateSelector.selectedItem.toString()]!!
-    }
+    fun calculateTax(pretaxValue: Double): Double =
+            pretaxValue * statesTaxMap[stateSelector.selectedItem.toString()]!!
 
-    fun calculateDiscount(prediscountValue: Double ): Double {
+    fun calculateDiscount(prediscountValue: Double ): Double = when {
 
-        return if (prediscountValue >= 50000) {
-            prediscountValue * 0.85 }
-        else if (prediscountValue >=  10000) {
-            prediscountValue * 0.90 }
-        else if (prediscountValue >= 7000 ) {
-            prediscountValue * 0.93 }
-        else if (prediscountValue >= 5000) {
-            prediscountValue * 0.95 }
-        else if (prediscountValue >= 1000) {
-            prediscountValue * 0.97 }
-        else { prediscountValue }
+        (prediscountValue >= 50000) -> prediscountValue * 0.85
+        (prediscountValue >= 10000) -> prediscountValue * 0.90
+        (prediscountValue >= 7000 ) -> prediscountValue * 0.93
+        (prediscountValue >= 5000 ) -> prediscountValue * 0.95
+        (prediscountValue >= 1000 ) -> prediscountValue * 0.97
+        else ->  prediscountValue
     }
 }
